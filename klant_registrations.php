@@ -42,6 +42,7 @@
                             <th>Klant Naam</th>
                             <th>Email</th>
                             <th>Postcode</th>
+                            <th>Huisnummer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,10 +51,13 @@
                             $sql_statement = "SELECT * FROM `klant_gegevens`";
                             $result_sql_post = $con->query($sql_statement);
 
-                            prettyprint($result_sql_post);
                             if($result_sql_post->num_rows>0){
                                 while($row = $result_sql_post->fetch_assoc()){
-                                    prettyprint($row);
+                                    echo "<th>" . $row['id'] . "</th>";
+                                    echo "<th>" . $row['name'] . " " . $row['lastname'] . "</th>";
+                                    echo "<th>" . $row['email'] . "</th>";
+                                    echo "<th>" . $row['postalcode'] . "</th>";
+                                    echo "<th>" . $row['housenr'] . "</th>";
                                 }
                             }
                         ?>
