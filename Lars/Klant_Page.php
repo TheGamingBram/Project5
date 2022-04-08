@@ -1,3 +1,6 @@
+<?php 
+        include("../Assets/config.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klanten_Page</title>
-    <link href="Klanten_Page.css" rel="stylesheet">
+    <link href="newcss.css" rel="stylesheet">
 </head>
 <body>
     <div class="container flex">
@@ -13,16 +16,9 @@
             <div class="input-container">
                 <form action="" method="POST">
                 <h1>Vul hier uw Gegevens In</h1> 
-                <span>Naam:</span>               
-                <input type="text" name="v_naam">              
-                <span>AchterNaam:</span>         
-                <input type="text" name="A_naam">              
-                <span>Email:</span>              
-                <input type="text" name="email">              
-                <span>PostCode:</span>           
-                <input type="text" name="postcode">              
-                <span>HuisNummer:</span>         
-                <input type="text" name="huisnummer">   
+                <input type="text" name="v_naam" class="question" required autocomplete="off" />
+                <label for="v_naam"><span>Wat is uw Naam?</span></label>  
+                <input type="submit" value="Submit!">
                 </form>       
             </div>
         </div>

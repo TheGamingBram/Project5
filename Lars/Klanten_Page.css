@@ -37,4 +37,25 @@ form{
     justify-content: center;
     align-items: center;
 }
+.form-submit-button {
+    margin-top: 1em;
+    background: #0066A2;
+    color: white;
+    border-style: none;
+    height: 7vh;
+    width: 7vw;
+    text-shadow: none;
+    opacity: 0.85;
+}
+.form-submit-button:hover{
+    margin-top: 1em;
+    background: #0066A2;
+    color: white;
+    border-style: outset;
+    border-color: #0066A2;
+    height: 7vh;
+    width: 7vw;
+    text-shadow: none;
+    opacity: 1;
+}
 
