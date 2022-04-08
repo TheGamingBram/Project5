@@ -1,5 +1,8 @@
 html, body {
+    color: aliceblue;
     margin:0px;
+    background-image: url("Fietsers-.jpg");
+    background-size: cover;
   }
 span{
     margin-top: 1em;
@@ -9,6 +12,12 @@ span{
 input{
     height: 7vh;
     width: 25vw;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .container{
     height: 100vh;
@@ -20,8 +29,7 @@ input{
     align-items: center;
 }
 .input-container{
-    background-color: black;
-    opacity: 0.1;
+    background: rgb(0, 0, 0, 0.5);
     height: 100vh;
     width: 40vw;
     display: flex;
