@@ -3,7 +3,5 @@
     include("./Assets/header.php");
 ?>
 <body>
-
-
     
 </body>
