@@ -21,7 +21,8 @@ html {
   
   input,
   span,
-  label {
+  label,
+  textarea {
     font-family: 'Ubuntu', sans-serif;
     display: block;
     margin: 10px;
@@ -41,26 +42,28 @@ html {
       width: 60vw
   }
   
-  :focus,
+  textarea:focus,
   input:focus {
     outline: 0;
   }
   /* Question */
   
-  input.question {
+  input.question,
+  textarea.question {
     font-size: 20px;
     font-weight: 300;
     border-radius: 2px;
     margin: 0;
     border: none;
-    width: 33%;
+    width: 60%;
     background: rgba(0, 0, 0, 0);
     transition: padding-top 0.2s ease, margin-top 0.2s ease;
     overflow-x: hidden; /* Hack to make "rows" attribute apply in Firefox. */
   }
   /* Underline and Placeholder */
   
-  input.question + label {
+  input.question + label,
+  textarea.question + label {
     display: block;
     position: relative;
     white-space: nowrap;
@@ -73,7 +76,8 @@ html {
     height: 0px;
   }
   
-  input.question:focus + label {
+  input.question:focus + label,
+  textarea.question:focus + label {
     width: 40%;
     left: 30px;
   }
@@ -84,22 +88,37 @@ html {
     margin-top: 5vh;
   }
   
+  textarea.question:valid,
+  textarea.question:focus {
+    margin-top: 7px;
+  }
+  
   input.question:focus + label > span,
   input.question:valid + label > span {
     top: -60px;
     font-size: 22px;
     color: #333;
   }
-
-  input.question:valid + label {
+  
+  textarea.question:focus + label > span,
+  textarea.question:valid + label > span {
+    top: -150px;
+    font-size: 22px;
+    color: #333;
+  }
+  
+  input.question:valid + label,
+  textarea.question:valid + label {
     border-color: green;
   }
   
-  input.question:invalid {
+  input.question:invalid,
+  textarea.question:invalid {
     box-shadow: none;
   }
   
-  input.question + label > span {
+  input.question + label > span,
+  textarea.question + label > span {
     font-weight: 300;
     margin: 0;
     position: absolute;
@@ -130,12 +149,12 @@ html {
     background: #999;
   }
   
-  input.question:valid ~ input[type="submit"] {
+  input.question:valid ~ input[type="submit"], textarea.question:valid ~ input[type="submit"] {
     -webkit-animation: appear 1s forwards;
     animation: appear 1s forwards;
   }
   
-  input.question:invalid ~ input[type="submit"] {
+  input.question:invalid ~ input[type="submit"], textarea.question:invalid ~ input[type="submit"] {
     display: none;
   }
 
