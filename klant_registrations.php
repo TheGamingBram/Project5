@@ -43,29 +43,33 @@
                             <th>Email</th>
                             <th>Postcode</th>
                             <th>Huisnummer</th>
+                            <th>Acties</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        
+                            $models = "";
+
+
                             $sql_statement = "SELECT * FROM `klant_gegevens`";
                             $result_sql_post = $con->query($sql_statement);
 
                             if($result_sql_post->num_rows>0){
                                 while($row = $result_sql_post->fetch_assoc()){
-                                    echo "<th>" . $row['id'] . "</th>";
-                                    echo "<th>" . $row['name'] . " " . $row['lastname'] . "</th>";
-                                    echo "<th>" . $row['email'] . "</th>";
-                                    echo "<th>" . $row['postalcode'] . "</th>";
-                                    echo "<th>" . $row['housenr'] . "</th>";
+                                    echo "<td>" . $row['id'] . "</td>";
+                                    echo "<td>" . $row['name'] . " " . $row['lastname'] . "</td>";
+                                    echo "<td>" . $row['email'] . "</td>";
+                                    echo "<td>" . $row['postalcode'] . "</td>";
+                                    echo "<td>" . $row['housenr'] . "</td>";
+                                    echo "<td><button class='btn btn-info btn-circle' data-toggle='modal' data-target='.".$row['id']."-modal'><span class='fas fa-info' aria-hidden='true'></span></button></td>";
+
+
                                 }
                             }
                         ?>
                     </tbody>
                 </table>
             </div>
-            
-
           </main>
         </div>
       </div>
@@ -73,5 +77,12 @@
 <script>
     $('#klant_tab').dataTable({
         responsive: true,
+        "columnDefs": [
+          {
+              "targets": [0],
+              "visible": false,
+              "searchable": false
+          }
+        ]
     });
 </script>
