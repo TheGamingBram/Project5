@@ -24,6 +24,12 @@
                     Klant Gegevens
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="merk_page.php">
+                    <span class="fas fa-user"></span>
+                    Merk Gegevens
+                  </a>
+                </li>
               </ul>
             </div>
           </nav>
