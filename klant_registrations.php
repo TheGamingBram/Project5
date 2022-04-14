@@ -40,9 +40,6 @@
                         <tr>
                             <th>Id</th>
                             <th>Klant Naam</th>
-                            <th>Email</th>
-                            <th>Postcode</th>
-                            <th>Huisnummer</th>
                             <th>Acties</th>
                         </tr>
                     </thead>
@@ -58,11 +55,46 @@
                                 while($row = $result_sql_post->fetch_assoc()){
                                     echo "<td>" . $row['id'] . "</td>";
                                     echo "<td>" . $row['name'] . " " . $row['lastname'] . "</td>";
-                                    echo "<td>" . $row['email'] . "</td>";
-                                    echo "<td>" . $row['postalcode'] . "</td>";
-                                    echo "<td>" . $row['housenr'] . "</td>";
-                                    echo "<td><button class='btn btn-info btn-circle' data-toggle='modal' data-target='.".$row['id']."-modal'><span class='fas fa-info' aria-hidden='true'></span></button></td>";
+                                    echo "<td><button class='btn btn-info btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-".$row['id']."'><span class='fas fa-info' aria-hidden='true'></span></button></td>";
+                                  
 
+                                    $models .= "
+                                    
+                                    <div class='modal fade' id='Modal-".$row['id']."' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                      <div class='modal-dialog modal-dialog-centered modal-lg'>
+                                        <div class='modal-content'>
+                                          <div class='modal-header'>
+                                            <h5 class='modal-title' id='exampleModalLabel'>Modal title</h5>
+                                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                          </div>
+                                          <div class='modal-body'>
+                                            <table class='table'>
+                                              <thead>
+                                                <th scope='col'>Klant ID</th>
+                                                <th scope='col'>Naam</th>
+                                                <th scope='col'>Email</th>
+                                                <th scope='col'>Postcode</th>
+                                                <th scope='col'>Huisnummer</th>
+                                              </thead>
+                                              <tbody>
+                                                <tr>
+                                                  <th scope='row'>".$row['id']."</th>
+                                                  <td>" . $row['name'] . " " . $row['lastname'] . "</td>
+                                                  <td>".$row['email']."</td>
+                                                  <td>".$row['postalcode']."</td>
+                                                  <td>".$row['housenr']."</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                          <div class='modal-footer'>
+                                            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    ";
 
                                 }
                             }
@@ -71,6 +103,7 @@
                 </table>
             </div>
           </main>
+          <?= $models ?>
         </div>
       </div>
 </body>
