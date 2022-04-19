@@ -1,7 +1,13 @@
 <?php
 include("./Assets/config.php");
 
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+  if(empty(trim($_POST["name"]))){
+    PHP_Allert("vul AUB uw naam in");
+  }elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["name"]))){
+    PHP_Allert("Deze tekens Gelden niet");
+  }else {
     $sql = "INSERT INTO klant_gegevens (name, lastname, email, postalcode, housenr) VALUES (?, ?, ?, ?, ?)";
 
     if($stmt = mysqli_prepare($link, $sql)){
@@ -21,6 +27,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       PHP_Allert("oh no our code its broken");
     }
   }
+}
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,13 +51,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <input type="text" name="lastname" class="question" required autocomplete="off" />
             <label for="a_naam"><span>Wat is uw Achternaam?</span></label> 
 
-            <input type="text" name="email" class="question" required autocomplete="off" />
+            <input type="email" name="email" class="question" required autocomplete="off" />
             <label for="email"><span>Wat is uw Email?</span></label> 
 
-            <input type="text" name="postalcode" class="question" required autocomplete="off" />
+            <input type="text" maxlength="6" minlength="6" name="postalcode" class="question" required autocomplete="off" />
             <label for="postcode"><span>Wat is uw Postcode?</span></label> 
 
-            <input type="text" name="housenr" class="question" required autocomplete="off" />
+            <input type="number" name="housenr" class="question" required autocomplete="off" />
             <label for="huisnummer"><span>Wat is uw HuisNummer?</span></label> 
 
             <input type="submit" value="Submit!">
