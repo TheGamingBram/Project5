@@ -1,5 +1,27 @@
-<?php 
-        include("../Assets/config.php");
+<?php
+
+use function PHPSTORM_META\sql_injection_subst;
+
+include("../Assets/config.php");
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $sql = "INSERT INTO klant_gegevens (name, lastname, email, postalcode, housenr) VALUES (?. ?, ?, ?, ?)";
+
+    if($stmt = mysqli_prepare($link, $sql)){
+        mysqli_stmt_bind_param($stmt, "sssss", $Vnaam, $Anaam, $Email, $Postcode, $Huisnummer);
+        $Vnaam = ($_POST['name']);
+        $Anaam = ($_POST['lastname']);
+        $Email = ($_POST['email']);
+        $Postcode = ($_POST['postalcode']);
+        $Huisnummer = ($_POST['housenr']);
+
+      if(mysqli_stmt_execute($stmt)){
+        PHP_Allert("Success");
+      }else{
+        PHP_Allert("Error, Probeer het later opnieuw!");
+      }
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,21 +35,21 @@
 <body>
     <div class="container">
         <div class="input-container">
-            <form action="" method="POST">
+            <form method="post">
             <h1>Vul hier uw Gegevens In</h1> 
-            <input type="text" name="v_naam" class="question" required autocomplete="off" />
+            <input type="text" name="name" class="question" required autocomplete="off" />
             <label for="v_naam"><span>Wat is uw Naam?</span></label>
 
-            <input type="text" name="a_naam" class="question" required autocomplete="off" />
+            <input type="text" name="lastname" class="question" required autocomplete="off" />
             <label for="a_naam"><span>Wat is uw Achternaam?</span></label> 
 
             <input type="text" name="email" class="question" required autocomplete="off" />
             <label for="email"><span>Wat is uw Email?</span></label> 
 
-            <input type="text" name="postcode" class="question" required autocomplete="off" />
+            <input type="text" name="postalcode" class="question" required autocomplete="off" />
             <label for="postcode"><span>Wat is uw Postcode?</span></label> 
 
-            <input type="text" name="huisnummer" class="question" required autocomplete="off" />
+            <input type="text" name="housenr" class="question" required autocomplete="off" />
             <label for="huisnummer"><span>Wat is uw HuisNummer?</span></label> 
 
             <input type="submit" value="Submit!">

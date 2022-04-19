@@ -3,7 +3,7 @@ Basic input element using psuedo classes
 */
 
 html {
-    color: #fff;
+    color: rgb(43, 2, 205);
     font-family: 'Lora', sans-serif;
     width: 100%;
   }
@@ -15,6 +15,7 @@ html {
   }
   
   h1 {
+    color: #fff;
     font-size: 28px;
     margin-bottom: 35px;
     padding-bottom: 5vh;
@@ -39,11 +40,12 @@ html {
       justify-content: center;
       align-items: center;
       height: 100vh;
-      width: 60vw
+      width: 100%
   }
   .input-container{
       background: rgba(0, 0, 0, .7);
       z-index: 2;
+      width: 60vw;
   }
   :focus,
   input:focus {
@@ -136,12 +138,15 @@ textarea:focus, input:focus {
     cursor: pointer;
   }
   
+  input[type="submit"]{
+    background: rgb(43, 2, 205);
+  }
   input[type="submit"]:hover {
-    background: #EEE;
+    background: rgb(56, 67, 228);
   }
   
   input[type="submit"]:active {
-    background: #999;
+    background: rgb(43, 2, 205);
   }
   
   input.question:valid ~ input[type="submit"] {
