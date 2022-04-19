@@ -28,8 +28,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klanten_Page</title>
+    <title>De Elstar</title>
     <link href="Assets/css/newcss.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="./Assets/Img/2020_Packshot_Elstar_500x500px-300x300.png">
 </head>
 <body>
     <div class="container">
