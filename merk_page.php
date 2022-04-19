@@ -1,6 +1,21 @@
 <?php 
     include("./Assets/config.php");
     include("./Assets/header.php");
+
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $sql = "INSERT INTO merk_gegevens (name) VALUES (?)";
+
+      if($stmt = mysqli_prepare($link, $sql)){
+        mysqli_stmt_bind_param($stmt, "s", $param_name);
+        $param_name = $_POST['MerkNaam'];
+
+        if(mysqli_stmt_execute($stmt)){
+          PHP_Allert("Success");
+        }else{
+          PHP_Allert("Error, Probeer het later opnieuw!");
+        }
+      }
+    }
 ?>
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -38,10 +53,30 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 class="h2">Merk Gegevens</h1>
               <div class="btn-toolbar mb-2 mb-md-0">
+                <button type="button" data-bs-toggle="modal" class="btn btn-success" data-bs-target="#exampleModal">Merk Toevoegen</button>
               </div>
             </div>
             <div class="col-md-12">
-
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form method="post">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" required class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <label for="MerkNaam" class="form-label">Merk Naam</label>
+                      <input type="text" name="MerkNaam" id="MerkNaam" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             <div>
               <canvas id="myChart" width="600" height="100"></canvas>
 

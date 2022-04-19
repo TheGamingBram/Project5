@@ -23,4 +23,8 @@
             print_r($arr);
         echo '</pre>';
     }
+
+    function PHP_Allert($msg){
+        echo '<script>alert("'.$msg.'")</script>';
+    }
 ?>
