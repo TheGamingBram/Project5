@@ -1,6 +1,12 @@
 <?php 
     include("./Assets/config.php");
     include("./Assets/header.php");
+
+    $result = mysqli_query($link, "SELECT * FROM klant_gegevens;");
+    $inschrijvingcount = mysqli_num_rows($result);
+
+    $result_merk = mysqli_query($link, "SELECT * FROM merk_gegevens;");
+    $Merkcount = mysqli_num_rows($result_merk);
 ?>
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -26,7 +32,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="merk_page.php">
-                    <span class="fas fa-user"></span>
+                    <span class="fas fa-copyright"></span>
                     Merk Gegevens
                   </a>
                 </li>
@@ -38,6 +44,29 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 class="h2">Dashboard</h1>
               <div class="btn-toolbar mb-2 mb-md-0">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="card" style="width: 18rem; text-align: center;">
+                  <br>
+                  <i class="fas fa-user fa-5x"></i>
+                  <div class="card-body">
+                    <h5 class="card-title">Klant Informatie</h5>
+                    <p class="card-text">Op Dit Moment hebben wij : <br> <?= $inschrijvingcount ?> Klanten.</p>
+                    <a href="Klant_Page.php" class="btn btn-primary">Naar Registratie Pagina</a>
+                    <a href="klant_registrations.php" class="btn btn-primary" style="margin-top: 1em;">Naar Klant Informatie Pagina</a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem; text-align: center; margin-left: 1em;">
+                  <br>
+                  <i class="fas fa-copyright fa-5x"></i>
+                  <div class="card-body">
+                    <h5 class="card-title">Merk Gegevens</h5>
+                    <p class="card-text">Op Dit Moment hebben wij : <br> <?= $Merkcount ?> Merken.</p>
+                    <a href="merk_page.php" class="btn btn-primary">Naar Merken Pagina</a>
+                  </div>
+                </div>
               </div>
             </div>
           </main>

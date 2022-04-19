@@ -26,7 +26,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="merk_page.php">
-                    <span class="fas fa-user"></span>
+                    <span class="fas fa-copyright"></span>
                     Merk Gegevens
                   </a>
                 </li>
@@ -71,7 +71,7 @@
                                       <div class='modal-dialog modal-dialog-centered modal-lg'>
                                         <div class='modal-content'>
                                           <div class='modal-header'>
-                                            <h5 class='modal-title' id='exampleModalLabel'>Modal title</h5>
+                                            <h5 class='modal-title' id='exampleModalLabel'>" . $row['name'] . " " . $row['lastname'] . "</h5>
                                             <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                                           </div>
                                           <div class='modal-body'>
