@@ -1,11 +1,8 @@
 <?php
-
-use function PHPSTORM_META\sql_injection_subst;
-
-include("../Assets/config.php");
+include("./Assets/config.php");
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $sql = "INSERT INTO klant_gegevens (name, lastname, email, postalcode, housenr) VALUES (?. ?, ?, ?, ?)";
+    $sql = "INSERT INTO klant_gegevens (name, lastname, email, postalcode, housenr) VALUES (?, ?, ?, ?, ?)";
 
     if($stmt = mysqli_prepare($link, $sql)){
         mysqli_stmt_bind_param($stmt, "sssss", $Vnaam, $Anaam, $Email, $Postcode, $Huisnummer);
@@ -20,6 +17,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       }else{
         PHP_Allert("Error, Probeer het later opnieuw!");
       }
+    }else{
+      PHP_Allert("oh no our code its broken");
     }
   }
 ?>
@@ -30,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klanten_Page</title>
-    <link href="newcss.css" rel="stylesheet">
+    <link href="Assets/css/newcss.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">

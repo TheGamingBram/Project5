@@ -59,10 +59,11 @@
 
                             if($result_sql_post->num_rows>0){
                                 while($row = $result_sql_post->fetch_assoc()){
+                                    echo "<tr>";
                                     echo "<td>" . $row['id'] . "</td>";
                                     echo "<td>" . $row['name'] . " " . $row['lastname'] . "</td>";
                                     echo "<td><button class='btn btn-info btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-".$row['id']."'><span class='fas fa-info' aria-hidden='true'></span></button></td>";
-                                  
+                                    echo "</tr>";
 
                                     $models .= "
                                     

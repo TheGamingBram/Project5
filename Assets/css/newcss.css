@@ -160,7 +160,7 @@ textarea:focus, input:focus {
 
 .container{
       z-index: -1;
-      background-image: url("Fietsers-.jpg");
+      background-image: url("../Img/Fietsers-.jpg");
       background-size: cover;
       display: flex;
       justify-content: center;
