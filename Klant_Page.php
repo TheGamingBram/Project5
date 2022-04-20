@@ -3,12 +3,7 @@ include("./Assets/config.php");
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-  if(empty(trim($_POST["name"]))){
-    PHP_Allert("vul AUB uw naam in");
-  }elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["name"]))){
-    PHP_Allert("Deze tekens Gelden niet");
-  }else {
-    $sql = "INSERT INTO klant_gegevens (name, lastname, email, postalcode, housenr) VALUES (?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO klant_gegevens (name, lastname, email, postalcode, housenr) VALUES (?, ?, ?, ?, ?)";
 
     if($stmt = mysqli_prepare($link, $sql)){
         mysqli_stmt_bind_param($stmt, "sssss", $Vnaam, $Anaam, $Email, $Postcode, $Huisnummer);
@@ -26,9 +21,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }else{
       PHP_Allert("oh no our code its broken");
     }
-  }
 }
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
     <div class="container">
         <div class="input-container">
-            <form method="post">
+            <form name="klant_gegevens" method="post">
             <h1>Vul hier uw Gegevens In</h1> 
             <input type="text" name="name" class="question" required autocomplete="off" />
             <label for="v_naam"><span>Wat is uw Naam?</span></label>
