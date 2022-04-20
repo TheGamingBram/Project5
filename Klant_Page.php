@@ -14,12 +14,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $Huisnummer = ($_POST['housenr']);
 
       if(mysqli_stmt_execute($stmt)){
-        PHP_Allert("Success");
+        header('Location: '.$_SERVER['PHP_SELF']);
       }else{
         PHP_Allert("Error, Probeer het later opnieuw!");
       }
     }else{
-      PHP_Allert("oh no our code its broken");
+      PHP_Allert("Error, Probeer het later opnieuw!");
     }
 }
 ?>
