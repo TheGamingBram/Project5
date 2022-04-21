@@ -15,24 +15,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $Postcode = ($_POST['postalcode']);
         $Huisnummer = ($_POST['housenr']);
 
-<<<<<<< HEAD
-        // Messages to afirm the user what is happening with the data
-        if(mysqli_stmt_execute($stmt)){
-          PHP_Allert("Success");
-        }else{
-          PHP_Allert("Error, Probeer het later opnieuw!");
-        }
-      }
-=======
       if(mysqli_stmt_execute($stmt)){
         header('Location: '.$_SERVER['PHP_SELF']);
       }else{
         PHP_Allert("Error, Probeer het later opnieuw!");
       }
-    }else{
-      PHP_Allert("Error, Probeer het later opnieuw!");
     }
->>>>>>> 9875917463212608f0958ba3c1b73f8307f0fbbd
 }
 ?>
 <!DOCTYPE html>
