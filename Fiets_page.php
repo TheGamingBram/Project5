@@ -1,12 +1,13 @@
 <?php 
-    include("./Assets/config.php");
-    include("./Assets/header.php");
+    include("./Assets/config.php"); //connection to database and some test functions
+    include("./Assets/header.php"); //insert to bootstrap and other java scripts
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-      if($_POST['type'] == "Insert"){
-        $sql = "INSERT INTO fiets_gegevens (merk_id, model, gender, color, size, status, info) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        if($stmt = mysqli_prepare($link, $sql)){
-          mysqli_stmt_bind_param($stmt, "sssssss", $parm_merk, $parm_model, $parm_gender, $parm_color, $parm_size, $parm_status, $parm_info);
+    if($_SERVER["REQUEST_METHOD"] == "POST"){ // if you get a post from the web page
+      if($_POST['type'] == "Insert"){ // if there is an insert atribute then it goes in here
+        $sql = "INSERT INTO fiets_gegevens (merk_id, model, gender, color, size, status, info) VALUES (?, ?, ?, ?, ?, ?, ?)"; // sql statement for the database
+        if($stmt = mysqli_prepare($link, $sql)){ //prepaires the sql statement
+          mysqli_stmt_bind_param($stmt, "sssssss", $parm_merk, $parm_model, $parm_gender, $parm_color, $parm_size, $parm_status, $parm_info); //binds the info for the sql statement
+          // all info out of post
           $parm_merk = $_POST['merknr'];
           $parm_model = $_POST['ModelName'];
           $parm_gender = $_POST['geslachtfiets'];
@@ -14,12 +15,13 @@
           $parm_size = $_POST['size'];
           $parm_status = 0;
           $parm_info = $_POST['info_text'];
-          if(mysqli_stmt_execute($stmt)){
-            PHP_Allert("Success, je data is toegevoegdt");
-            sleep(3);
-            header('Location: '.$_SERVER['PHP_SELF']);
+          // end post info
+          if(mysqli_stmt_execute($stmt)){ //try's to excecute to the database
+            PHP_Allert("Success, je data is toegevoegdt"); // popup message to show that it worked
+            sleep(3); // waits 3 seconds
+            header('Location: '.$_SERVER['PHP_SELF']);//reloads the page
           }else{
-            PHP_Allert("Error, Probeer het later opnieuw!");
+            PHP_Allert("Error, Probeer het later opnieuw!"); //if it fails then it shows this error
           }
         }
       }else{
@@ -28,11 +30,11 @@
     }
     
     $fill_select = "";
-    $sql_statement = "SELECT * FROM `merk_gegevens`";
-      $result_sql_post = $con->query($sql_statement);
-      if($result_sql_post->num_rows>0){
-        while($row = $result_sql_post->fetch_assoc()){
-          $fill_select .= "<option value='".$row['id']."'>".$row['name']."</option>";
+    $sql_statement = "SELECT * FROM `merk_gegevens`"; // statement to get all "merk" gegevens
+      $result_sql_post = $con->query($sql_statement); // excecutes the sql statement
+      if($result_sql_post->num_rows>0){ //checks if there is data
+        while($row = $result_sql_post->fetch_assoc()){ //if there is data then you can use the data
+          $fill_select .= "<option value='".$row['id']."'>".$row['name']."</option>"; //adds an option to the "fiets toevoegen" form
         }
       }
 ?>
@@ -162,33 +164,33 @@
                                 deelstar.fiets_gegevens.info
                             From
                                 deelstar.fiets_gegevens Inner Join
-                                deelstar.merk_gegevens On deelstar.merk_gegevens.id = deelstar.fiets_gegevens.merk_id";
-                            $result_sql_post = $con->query($sql_statement);
+                                deelstar.merk_gegevens On deelstar.merk_gegevens.id = deelstar.fiets_gegevens.merk_id"; //sql statement to get all info for the table
+                            $result_sql_post = $con->query($sql_statement); // excecutes the sql statement
 
-                            if($result_sql_post->num_rows>0){
-                                while($row = $result_sql_post->fetch_assoc()){
-                                    if($row['gender'] == 0){
+                            if($result_sql_post->num_rows>0){ // checks if there is data
+                                while($row = $result_sql_post->fetch_assoc()){ // enables the data so it can be used
+                                    if($row['gender'] == 0){ // if the data is 0 then it will be a "heren fiets"
                                       $gender = "Heren Fiets";
-                                    }elseif($row['gender'] == 1){
+                                    }elseif($row['gender'] == 1){ // if the data is 1 then it will be a "vrouwen fiets"
                                       $gender = "Vrouwen Fiets";
-                                    }else{
+                                    }else{ //else there it will be a "Gender neutrale Fiets"
                                       $gender = "Gender neutrale Fiets";
                                     }
 
-                                    if($row['status'] == 0){
+                                    if($row['status'] == 0){ // if the data is 0 then it will be a "Beschikbaar"
                                       $status = "Beschikbaar";
-                                    }elseif($row['status'] == 1){
+                                    }elseif($row['status'] == 1){ // if the data is 0 then it will be a "Verhuurd"
                                       $status = "Verhuurd";
-                                    }elseif ($row['status'] == 2) {
+                                    }elseif ($row['status'] == 2) { // if the data is 0 then it will be a "Reparatie"
                                       $status = "Reparatie";
-                                    }else{
-
+                                    }else{ // else the data will be empty
+                                      $status = "";
                                     }
 
 
-                                    echo "<tr>";
+                                    echo "<tr>"; // prepares the data for datatables
                                     echo "<td>" . $row['id'] . "</td>";
-                                    echo "<td>" . $row['model'] . "</td>";
+                                    echo "<td> <a href='#' data-bs-toggle='tooltip' data-bs-original-title='" . $row['info'] . "'>" . $row['model'] . "</a></td>";
                                     echo "<td>" . $row['name'] . "</td>";
                                     echo "<td>" . $gender . "</td>";
                                     echo "<td>" . $row['color'] . "</td>";
@@ -207,10 +209,14 @@
       </div>
 </body>
 <script>
-    $('#klant_tab').dataTable({
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')) //enables a tooltip for the bike info
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+    $('#klant_tab').dataTable({ //creates the datatable
         responsive: true,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/nl-NL.json"
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/nl-NL.json" //add the dutch language support
         }
     });
 </script>

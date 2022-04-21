@@ -1,12 +1,31 @@
 <?php 
-    include("./Assets/config.php");
-    include("./Assets/header.php");
+    include("./Assets/config.php"); //connection to database and some test functions
+    include("./Assets/header.php"); //insert to bootstrap and other java scripts
 
-    $result = mysqli_query($link, "SELECT * FROM klant_gegevens;");
+    $result = mysqli_query($link, "SELECT * FROM klant_gegevens;"); // simple sql statement to get all data out of the "klant_gegevens" table
     $inschrijvingcount = mysqli_num_rows($result);
 
-    $result_merk = mysqli_query($link, "SELECT * FROM merk_gegevens;");
+    $result_merk = mysqli_query($link, "SELECT * FROM merk_gegevens;"); // simple sql statement to get all data out of the "merk_gegevens" table
     $Merkcount = mysqli_num_rows($result_merk);
+
+    $names = "";
+    $data = "";
+
+    $sql_statement = "SELECT * FROM `merk_gegevens`"; // statement to get all "merk" gegevens
+                  $result_sql_post = $con->query($sql_statement);  // excecutes the sql statement
+                  if($result_sql_post->num_rows>0){ //checks if there is data
+                    while($row = $result_sql_post->fetch_assoc()){ //if there is data then you can use the data
+                      $names .= "'".$row['name']."',";
+
+                      $sql_statement_count = "SELECT COUNT(merk_id) AS 'Count' FROM `fiets_gegevens` Where merk_id = '".$row['id']."'"; //get the number of bike from the "fiets_gegevens" tables, using the id's form the "merk" table
+                      $result_sql = $con->query($sql_statement_count); // excecutes the sql statement
+                      if($result_sql->num_rows>0){ //checks if there is data
+                        while($row1 = $result_sql->fetch_assoc()){ //if there is data then you can use the data
+                          $data .= "'".$row1['Count']."',"; // adds the data for the char
+                        }
+                      }
+                    }
+                }
 ?>
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -27,7 +46,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="klant_registrations.php">
                     <span class="fas fa-user"></span>
-                    Klant Gegevens
+                    Klant Gegevensss
                   </a>
                 </li>
                 <li class="nav-item">
@@ -73,9 +92,38 @@
                     <a href="merk_page.php" class="btn btn-primary">Naar Merken Pagina</a>
                   </div>
                 </div>
+                <div class="card" style="width: 40rem; text-align: center; margin-left: 1em;">
+                  <br>
+                  <div class="card-body">
+                    <canvas id="myChart" width="600" height="250"></canvas>
+                  </div>
+                </div>
               </div>
             </div>
           </main>
         </div>
       </div>
 </body>
+<script>
+  var ctx = document.getElementById('myChart').getContext('2d'); // creates the chart
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [<?=$names?>],
+        datasets: [{
+           label: 'Aantal Fietsen',
+           data: [<?=$data?>],
+           backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+           borderColor: ['rgba(54, 162, 235, 1)'],
+           borderWidth: 1
+           }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+    });
+</script>

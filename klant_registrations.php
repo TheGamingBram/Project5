@@ -1,16 +1,16 @@
 <?php 
-    include("./Assets/config.php");
-    include("./Assets/header.php");
+    include("./Assets/config.php"); //connection to database and some test functions
+    include("./Assets/header.php"); //insert to bootstrap and other java scripts
 
-    if(isset($_GET['delid'])){
+    if(isset($_GET['delid'])){ // if the get is set to 'delid' then it will delete the id from the database
       $sql = "DELETE FROM `klant_gegevens` WHERE `klant_gegevens`.`id` = ?";
       if($stmt = mysqli_prepare($link, $sql)){
-        mysqli_stmt_bind_param($stmt, "s", $DelID);
-        $DelID = $_GET['delid'];
-        if(mysqli_stmt_execute($stmt)){
-          header('Location: '.$_SERVER['PHP_SELF']);
+        mysqli_stmt_bind_param($stmt, "s", $DelID); // prepaires the sql
+        $DelID = $_GET['delid']; //sets the delid to delid
+        if(mysqli_stmt_execute($stmt)){ //executes the sql
+          header('Location: '.$_SERVER['PHP_SELF']); // reloads the page
         }else{
-          PHP_Allert("Error, Probeer het later opnieuw!");
+          PHP_Allert("Error, Probeer het later opnieuw!"); //error if it doesnt work
         }
       }
     }
@@ -73,11 +73,11 @@
                             $models = "";
 
 
-                            $sql_statement = "SELECT * FROM `klant_gegevens`";
-                            $result_sql_post = $con->query($sql_statement);
+                            $sql_statement = "SELECT * FROM `klant_gegevens`"; // simple sql to get all info from the "klant_gegevens" table
+                            $result_sql_post = $con->query($sql_statement); // exceutes the sql
 
-                            if($result_sql_post->num_rows>0){
-                                while($row = $result_sql_post->fetch_assoc()){
+                            if($result_sql_post->num_rows>0){ //checks if there is data
+                                while($row = $result_sql_post->fetch_assoc()){ //if there is data then you can use the data
                                     echo "<tr>";
                                     echo "<td>" . $row['id'] . "</td>";
                                     echo "<td>" . $row['name'] . " " . $row['lastname'] . "</td>";
@@ -138,10 +138,10 @@
       </div>
 </body>
 <script>
-    $('#klant_tab').dataTable({
+    $('#klant_tab').dataTable({ // creates the datatable
         responsive: true,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/nl-NL.json"
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/nl-NL.json" //adds dutch language support
         },
         "columnDefs": [
           {
