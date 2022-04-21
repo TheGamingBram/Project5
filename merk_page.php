@@ -165,6 +165,9 @@
 <script>
     $('#klant_tab').dataTable({
         responsive: true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/nl-NL.json"
+        },
         "columnDefs": [
           {
               "targets": [0],

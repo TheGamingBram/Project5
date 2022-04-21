@@ -3,7 +3,28 @@
     include("./Assets/header.php");
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-      prettyprint($_POST);
+      if($_POST['type'] == "Insert"){
+        $sql = "INSERT INTO fiets_gegevens (merk_id, model, gender, color, size, status, info) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        if($stmt = mysqli_prepare($link, $sql)){
+          mysqli_stmt_bind_param($stmt, "sssssss", $parm_merk, $parm_model, $parm_gender, $parm_color, $parm_size, $parm_status, $parm_info);
+          $parm_merk = $_POST['merknr'];
+          $parm_model = $_POST['ModelName'];
+          $parm_gender = $_POST['geslachtfiets'];
+          $parm_color = $_POST['kleur'];
+          $parm_size = $_POST['size'];
+          $parm_status = 0;
+          $parm_info = $_POST['info_text'];
+          if(mysqli_stmt_execute($stmt)){
+            PHP_Allert("Success, je data is toegevoegdt");
+            sleep(3);
+            header('Location: '.$_SERVER['PHP_SELF']);
+          }else{
+            PHP_Allert("Error, Probeer het later opnieuw!");
+          }
+        }
+      }else{
+
+      }
     }
     
     $fill_select = "";
@@ -75,7 +96,7 @@
                         <div id="ModelNaamHelp" class="form-text">Model Naam</div>
                       </div>
                       <div class="mb-3">
-                        <select class="form-select" name="merknaam" aria-label="MerkNaamHelp">
+                        <select class="form-select" name="merknr" aria-label="MerkNaamHelp">
                           <?=$fill_select?>
                         </select>
                         <div id="MerkNaamHelp" class="form-text">Merk</div>
@@ -96,8 +117,13 @@
                         <input type="number" min="0" class="form-control" name="size" required aria-describedby="sizeHelp">
                         <div id="sizeHelp" class="form-text">Fiets Grote</div>
                       </div>
+                      <div class="mb-3">
+                      <textarea class="form-control" id="Texteara" name="info_text" rows="3"></textarea>
+                        <div id="Texteara" class="form-text">Info Fiets</div>
+                      </div>
                     </div>
                     <div class="modal-footer">
+                       <input type="hidden" name="type" value="Insert">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
                       <button type="submit" class="btn btn-success">Toevoegen</button>
                     </div>
@@ -149,11 +175,11 @@
                                       $gender = "Gender neutrale Fiets";
                                     }
 
-                                    if($row['status'] = 0){
+                                    if($row['status'] == 0){
                                       $status = "Beschikbaar";
-                                    }elseif($row['status'] = 1){
+                                    }elseif($row['status'] == 1){
                                       $status = "Verhuurd";
-                                    }elseif ($row['status'] = 2) {
+                                    }elseif ($row['status'] == 2) {
                                       $status = "Reparatie";
                                     }else{
 
@@ -183,5 +209,8 @@
 <script>
     $('#klant_tab').dataTable({
         responsive: true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/nl-NL.json"
+        }
     });
 </script>
