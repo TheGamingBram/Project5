@@ -10,7 +10,7 @@
         $param_name = $_POST['MerkNaam'];
 
         if(mysqli_stmt_execute($stmt)){
-          PHP_Allert("Success");
+          header('Location: '.$_SERVER['PHP_SELF']);
         }else{
           PHP_Allert("Error, Probeer het later opnieuw!");
         }
@@ -45,6 +45,12 @@
                     Merk Gegevens
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Fiets_page.php">
+                    <span class="fas fa-bicycle"></span>
+                    Fiets Gegevens
+                  </a>
+                </li>
               </ul>
             </div>
           </nav>
@@ -70,8 +76,8 @@
                       <input type="text" name="MerkNaam" id="MerkNaam" class="form-control">
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+                      <button type="submit" class="btn btn-success">Toevoegen</button>
                     </div>
                     </form>
                   </div>
@@ -82,11 +88,20 @@
 
               <?php 
               $names = "";
+              $data = "";
                   $sql_statement = "SELECT * FROM `merk_gegevens`";
                   $result_sql_post = $con->query($sql_statement);
                   if($result_sql_post->num_rows>0){
                     while($row = $result_sql_post->fetch_assoc()){
                       $names .= "'".$row['name']."',";
+
+                      $sql_statement_count = "SELECT COUNT(merk_id) AS 'Count' FROM `fiets_gegevens` Where merk_id = '".$row['id']."'";
+                      $result_sql = $con->query($sql_statement_count);
+                      if($result_sql->num_rows>0){
+                        while($row1 = $result_sql->fetch_assoc()){
+                          $data .= "'".$row1['Count']."',";
+                        }
+                      }
                     }
                 }
               ?>
@@ -97,8 +112,8 @@
                     data: {
                         labels: [<?=$names?>],
                         datasets: [{
-                            label: 'Aantal Fietsen Per Merk',
-                            data: [],
+                            label: 'Aantal Fietsen',
+                            data: [<?=$data?>],
                             backgroundColor: [
                                 'rgba(54, 162, 235, 0.2)'
                             ],

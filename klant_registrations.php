@@ -1,6 +1,19 @@
 <?php 
     include("./Assets/config.php");
     include("./Assets/header.php");
+
+    if(isset($_GET['delid'])){
+      $sql = "DELETE FROM `klant_gegevens` WHERE `klant_gegevens`.`id` = ?";
+      if($stmt = mysqli_prepare($link, $sql)){
+        mysqli_stmt_bind_param($stmt, "s", $DelID);
+        $DelID = $_GET['delid'];
+        if(mysqli_stmt_execute($stmt)){
+          header('Location: '.$_SERVER['PHP_SELF']);
+        }else{
+          PHP_Allert("Error, Probeer het later opnieuw!");
+        }
+      }
+    }
 ?>
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -28,6 +41,12 @@
                   <a class="nav-link" href="merk_page.php">
                     <span class="fas fa-copyright"></span>
                     Merk Gegevens
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Fiets_page.php">
+                    <span class="fas fa-bicycle"></span>
+                    Fiets Gegevens
                   </a>
                 </li>
               </ul>
@@ -62,7 +81,11 @@
                                     echo "<tr>";
                                     echo "<td>" . $row['id'] . "</td>";
                                     echo "<td>" . $row['name'] . " " . $row['lastname'] . "</td>";
-                                    echo "<td><button class='btn btn-info btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-".$row['id']."'><span class='fas fa-info' aria-hidden='true'></span></button></td>";
+                                    echo "<td>";
+                                    echo "<button class='btn btn-info btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-".$row['id']."'><span class='fas fa-info' aria-hidden='true'></span></button>";
+                                    echo "  ";
+                                    echo "<a href='klant_registrations.php?delid=".$row['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button>";
+                                    echo "</td>";
                                     echo "</tr>";
 
                                     $models .= "

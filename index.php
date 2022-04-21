@@ -36,6 +36,12 @@
                     Merk Gegevens
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Fiets_page.php">
+                    <span class="fas fa-bicycle"></span>
+                    Fiets Gegevens
+                  </a>
+                </li>
               </ul>
             </div>
           </nav>
