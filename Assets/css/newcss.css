@@ -102,6 +102,11 @@ html {
     border-color: green;
     color: #fff;
   }
+
+  input.question:invalid + label {
+    border-color: red;
+    color: #fff;
+  }
   
   input.question:invalid {
     box-shadow: none;
@@ -120,7 +125,7 @@ html {
     transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
   }
 
-  input, select, textarea{
+  input, select, textarea:valid{
     color: #fff;
 }
 
@@ -139,22 +144,27 @@ textarea:focus, input:focus {
   }
   
   input[type="submit"]{
+    color: #fff;
     background: rgb(43, 2, 205);
   }
   input[type="submit"]:hover {
+    color: #fff;
     background: rgb(56, 67, 228);
   }
   
   input[type="submit"]:active {
+    color: #fff;
     background: rgb(43, 2, 205);
   }
   
   input.question:valid ~ input[type="submit"] {
+    color: #fff;
     -webkit-animation: appear 1s forwards;
     animation: appear 1s forwards;
   }
   
   input.question:invalid ~ input[type="submit"] {
+    color: #fff;
     display: none;
   }
 
