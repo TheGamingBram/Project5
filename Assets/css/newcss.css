@@ -33,7 +33,7 @@ html {
     font-size: 22px;
   }
   span, label{
-    left: -110px;
+    left: -12%;
   }
   form{
       display: flex;
@@ -82,7 +82,7 @@ html {
   
   input.question:focus + label {
     width: 40%;
-    left: 30px;
+    left: 3.3%;
   }
   
   input.question:focus,
@@ -115,7 +115,6 @@ html {
     color: #8F8F8F;
     font-size: 28px;
     top: -40px;
-    left: 0px;
     z-index: -1;
     -webkit-transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
     transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
