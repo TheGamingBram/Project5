@@ -40,19 +40,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="input-container">
             <form name="klant_gegevens" method="post" autocomplete="off">
             <h1>Vul hier uw Gegevens In</h1> 
-            <input type="text" name="name" class="question" required autocomplete="1231241251"  />
+            <input type="text" name="name" class="question" required autocomplete="off"  />
             <label for="v_naam"><span>Naam</span></label>
 
-            <input type="text" name="lastname" class="question" required autocomplete="623723"  />
+            <input type="text" name="lastname" class="question" required autocomplete="off"  />
             <label for="a_naam"><span>Achternaam</span></label> 
 
-            <input type="email" name="email" class="question" required autocomplete="53423"  />
+            <input type="email" name="email" class="question" required autocomplete="off"  />
             <label for="email"><span>Email</span></label> 
 
-            <input type="text" maxlength="6" minlength="6" name="postalcode" class="question" required autocomplete="6236772" />
+            <input type="text" maxlength="6" minlength="6" name="postalcode" class="question" required autocomplete="off" />
             <label for="postcode"><span>Postcode</span></label> 
 
-            <input type="number" name="housenr" class="question" required autocomplete="26789888"  />
+            <input type="number" name="housenr" class="question" required autocomplete="off"  />
             <label for="huisnummer"><span>HuisNummer</span></label> 
 
             <input type="submit" value="Submit!">
