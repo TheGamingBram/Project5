@@ -2,6 +2,18 @@
     include("./Assets/config.php"); //connection to database and some test functions
     include("./Assets/header.php"); //insert to bootstrap and other java scripts
 
+    if(isset($_GET['delid'])){ // if the get is set to 'delid' then it will delete the id from the database
+      $sql = "DELETE FROM `merk_gegevens` WHERE `merk_gegevens`.`id` = ?";
+      if($stmt = mysqli_prepare($link, $sql)){
+        mysqli_stmt_bind_param($stmt, "s", $DelID); // prepaires the sql
+        $DelID = $_GET['delid']; //sets the delid to delid
+        if(mysqli_stmt_execute($stmt)){ //executes the sql
+          header('Location: '.$_SERVER['PHP_SELF']); // reloads the page
+        }else{
+          PHP_Allert("Error, Probeer het later opnieuw!"); //error if it doesnt work
+        }
+      }
+    }
     if($_SERVER["REQUEST_METHOD"] == "POST"){ //if the page is in post mode then it will start the insert code
       $sql = "INSERT INTO merk_gegevens (name) VALUES (?)"; //sql statement
 
@@ -83,63 +95,13 @@
                   </div>
                 </div>
               </div>
-            <div>
-              <canvas id="myChart" width="600" height="100"></canvas>
-
-              <?php 
-              $names = "";
-              $data = "";
-                  $sql_statement = "SELECT * FROM `merk_gegevens`"; //another sql statement
-                  $result_sql_post = $con->query($sql_statement); // excutes the query
-                  if($result_sql_post->num_rows>0){ // checks if there is data
-                    while($row = $result_sql_post->fetch_assoc()){ //if there is data so it prepares the statement
-                      $names .= "'".$row['name']."',";
-
-                      $sql_statement_count = "SELECT COUNT(merk_id) AS 'Count' FROM `fiets_gegevens` Where merk_id = '".$row['id']."'"; //get the number of bike from the "fiets_gegevens" tables, using the id's form the "merk" table
-                      $result_sql = $con->query($sql_statement_count); // excecutes the sql statement
-                      if($result_sql->num_rows>0){ //checks if there is data
-                        while($row1 = $result_sql->fetch_assoc()){ //if there is data then you can use the data
-                          $data .= "'".$row1['Count']."',"; // adds the data for the char
-                        }
-                      }
-                    }
-                }
-              ?>
-              <script>
-                var ctx = document.getElementById('myChart').getContext('2d'); //creates the chart
-                var myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: [<?=$names?>],
-                        datasets: [{
-                            label: 'Aantal Fietsen',
-                            data: [<?=$data?>],
-                            backgroundColor: [
-                                'rgba(54, 162, 235, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(54, 162, 235, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-              </script>
-            </div>
-            
               <div style="margin-top: 10vh;">
                 <table id="klant_tab" class="table">
                     <thead>
                         <tr>
                             <th>Id</th>
                             <th>Merk Naam</th>
+                            <th>Acties</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -150,7 +112,9 @@
                                 while($row1 = $result_sql_post1->fetch_assoc()){ // sets up the results out of the sql
                                   
                                   echo "<tr><td>".$row1['id']."</td>";
-                                  echo "<td>".$row1['name']."</td></tr>";
+                                  echo "<td>".$row1['name']."</td>";
+                                  echo "<td><a href='merk_page.php?delid=".$row1['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button></td>";
+                                  echo "</tr>";
                                 }
                             }
                         ?>

@@ -2,6 +2,18 @@
     include("./Assets/config.php"); //connection to database and some test functions
     include("./Assets/header.php"); //insert to bootstrap and other java scripts
 
+    if(isset($_GET['delid'])){ // if the get is set to 'delid' then it will delete the id from the database
+      $sql = "DELETE FROM `fiets_gegevens` WHERE `fiets_gegevens`.`id` = ?";
+      if($stmt = mysqli_prepare($link, $sql)){
+        mysqli_stmt_bind_param($stmt, "s", $DelID); // prepaires the sql
+        $DelID = $_GET['delid']; //sets the delid to delid
+        if(mysqli_stmt_execute($stmt)){ //executes the sql
+          //header('Location: '.$_SERVER['PHP_SELF']); // reloads the page
+        }else{
+          PHP_Allert("Error, Probeer het later opnieuw!"); //error if it doesnt work
+        }
+      }
+    }
     if($_SERVER["REQUEST_METHOD"] == "POST"){ // if you get a post from the web page
       if($_POST['type'] == "Insert"){ // if there is an insert atribute then it goes in here
         $sql = "INSERT INTO fiets_gegevens (merk_id, model, gender, color, size, status, info) VALUES (?, ?, ?, ?, ?, ?, ?)"; // sql statement for the database
@@ -196,8 +208,14 @@
                                     echo "<td>" . $row['color'] . "</td>";
                                     echo "<td>" . $row['size'] . "</td>";
                                     echo "<td>" . $status . "</td>";
-                                    echo "<td> </td>";
+                                    echo "<td>" ;
+                                    echo "<a href='Fiets_page.php?delid=".$row['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button>";
+                                    echo "</td>";
                                     echo "</tr>";
+
+
+
+
                                 }
                             }
                         ?>

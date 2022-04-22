@@ -14,6 +14,9 @@
         }
       }
     }
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $Update = mysqli_query($link, "UPDATE `klant_gegevens` SET `name` = '".$_POST['first_name']."', `lastname` = '".$_POST['last_name']."', `email` = '".$_POST['email']."', `postalcode` = '".$_POST['postalcode']."', `housenr` = '".$_POST['housenr']."' WHERE `klant_gegevens`.`id` = '".$_POST['id']."';");
+    }
 ?>
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -84,9 +87,56 @@
                                     echo "<td>";
                                     echo "<button class='btn btn-info btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-".$row['id']."'><span class='fas fa-info' aria-hidden='true'></span></button>";
                                     echo "  ";
+                                    echo "<button class='btn btn-warning btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-edit-".$row['id']."'><span class='fas fa-pen' aria-hidden='true'></span></button>";
+                                    echo "  ";
                                     echo "<a href='klant_registrations.php?delid=".$row['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button>";
                                     echo "</td>";
                                     echo "</tr>";
+
+                                    $models .= "
+                                    
+                                    <div class='modal fade' id='Modal-edit-".$row['id']."' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                      <div class='modal-dialog modal-dialog-centered modal-lg'>
+                                        <div class='modal-content'>
+                                          <div class='modal-header'>
+                                            <h5 class='modal-title' id='exampleModalLabel'>Data aanpassen</h5>
+                                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                          </div>
+                                          <form method='post'>
+                                          <div class='modal-body'>
+                                          <input type='hidden' name='id' value='".$row['id']."'>
+                                          <div class='mb-3'>
+                                            <input type='text' class='form-control' name='first_name' value='".$row['name']."' required aria-describedby='first_name'>
+                                            <div id='first_name' class='form-text'>Voornaam</div>
+                                          </div>
+                                          <div class='mb-3'>
+                                            <input type='text' class='form-control' name='last_name' value='".$row['lastname']."' required aria-describedby='last_name'>
+                                            <div id='last_name' class='form-text'>Achternaam</div>
+                                          </div>
+                                          <div class='mb-3'>
+                                            <input type='email' class='form-control' name='email' value='".$row['email']."' required aria-describedby='email'>
+                                            <div id='email' class='form-text'>Email</div>
+                                          </div>
+                                          <div class='mb-3'>
+                                            <input type='text' maxlength='6' minlength='6' class='form-control' name='postalcode' value='".$row['postalcode']."' required aria-describedby='postalcode'>
+                                            <div id='postalcode' class='form-text'>Post Code</div>
+                                          </div>
+                                          <div class='mb-3'>
+                                            <input type='number' class='form-control' name='housenr' value='".$row['housenr']."' required aria-describedby='housenr'>
+                                            <div id='housenr' class='form-text'>Huis nummer</div>
+                                          </div>
+
+                                          </div>
+                                          <div class='modal-footer'>
+                                            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                                            <button type='submit' class='btn btn-warning'>Aanpassen</button>
+                                          </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    ";
 
                                     $models .= "
                                     
