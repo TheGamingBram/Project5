@@ -16,7 +16,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $Huisnummer = ($_POST['housenr']);
 
       if(mysqli_stmt_execute($stmt)){
-        header('Location: '.$_SERVER['PHP_SELF']);
+        PHP_Allert("Succes, je bent aangemeld"); // popup message to show that it worked
+        sleep(3); // waits 3 seconds
+        header('Location: '.$_SERVER['PHP_SELF']);//reloads the page
       }else{
         PHP_Allert("Error, Probeer het later opnieuw!");
       }
@@ -36,21 +38,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
     <div class="container">
         <div class="input-container">
-            <form name="klant_gegevens" method="post">
+            <form name="klant_gegevens" method="post" autocomplete="form-auto-off">
             <h1>Vul hier uw Gegevens In</h1> 
-            <input type="text" name="name" class="question" required autocomplete="off" />
+            <input type="text" name="name" class="question" required autocomplete="1231241251" />
             <label for="v_naam"><span>Wat is uw Naam?</span></label>
 
-            <input type="text" name="lastname" class="question" required autocomplete="off" />
+            <input type="text" name="lastname" class="question" required autocomplete="623723" />
             <label for="a_naam"><span>Wat is uw Achternaam?</span></label> 
 
-            <input type="email" name="email" class="question" required autocomplete="off" />
+            <input type="email" name="email" class="question" required autocomplete="53423" />
             <label for="email"><span>Wat is uw Email?</span></label> 
 
-            <input type="text" maxlength="6" minlength="6" name="postalcode" class="question" required autocomplete="off" />
+            <input type="text" maxlength="6" minlength="6" name="postalcode" class="question" required autocomplete="6236772" />
             <label for="postcode"><span>Wat is uw Postcode?</span></label> 
 
-            <input type="number" name="housenr" class="question" required autocomplete="off" />
+            <input type="number" name="housenr" class="question" required autocomplete="26789888" />
             <label for="huisnummer"><span>Wat is uw HuisNummer?</span></label> 
 
             <input type="submit" value="Submit!">
