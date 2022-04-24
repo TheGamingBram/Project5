@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 08, 2022 at 07:29 AM
+-- Generation Time: Apr 24, 2022 at 10:36 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -50,7 +50,6 @@ DROP TABLE IF EXISTS `fiets_reparaties`;
 CREATE TABLE IF NOT EXISTS `fiets_reparaties` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fiets_id` int(11) NOT NULL,
-  `reparatie_status` int(1) NOT NULL,
   `reparatie_datum` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `reparatie_info` varchar(255) NOT NULL,
   `reparatie_notities` varchar(255) NOT NULL,
@@ -68,11 +67,10 @@ CREATE TABLE IF NOT EXISTS `fiets_verhuur` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `klant_id` int(11) NOT NULL,
   `fiets_id` int(11) NOT NULL,
-  `verhuur_status` int(1) NOT NULL,
   `verhuur_datum` datetime NOT NULL,
-  `verhuur_deadline` datetime NOT NULL,
+  `verhuur_deadline` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `klant_gegevens` (
   `name` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `postalcode` int(6) NOT NULL,
+  `postalcode` varchar(6) NOT NULL,
   `housenr` int(5) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

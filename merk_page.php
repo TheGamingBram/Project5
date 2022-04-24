@@ -66,7 +66,6 @@
               </ul>
             </div>
           </nav>
-      
           <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 class="h2">Merk Gegevens</h1>
@@ -95,31 +94,33 @@
                   </div>
                 </div>
               </div>
-              <div style="margin-top: 10vh;">
-                <table id="klant_tab" class="table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Merk Naam</th>
-                            <th>Acties</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql_statement1 = "SELECT * FROM `merk_gegevens`"; // sql statement fro the "merk_gegevens"
-                        $result_sql_post1 = $con->query($sql_statement1); //excecutes the statement
-                            if($result_sql_post1->num_rows>0){ //checks if there is data
-                                while($row1 = $result_sql_post1->fetch_assoc()){ // sets up the results out of the sql
-                                  
-                                  echo "<tr><td>".$row1['id']."</td>";
-                                  echo "<td>".$row1['name']."</td>";
-                                  echo "<td><a href='merk_page.php?delid=".$row1['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button></td>";
-                                  echo "</tr>";
-                                }
-                            }
-                        ?>
-                    </tbody>
-                </table>
+              <div class="row">
+                <div style="">
+                  <table id="klant_tab" class="table">
+                      <thead>
+                          <tr>
+                              <th>Id</th>
+                              <th>Merk Naam</th>
+                              <th>Acties</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php
+                          $sql_statement1 = "SELECT * FROM `merk_gegevens`"; // sql statement fro the "merk_gegevens"
+                          $result_sql_post1 = $con->query($sql_statement1); //excecutes the statement
+                              if($result_sql_post1->num_rows>0){ //checks if there is data
+                                  while($row1 = $result_sql_post1->fetch_assoc()){ // sets up the results out of the sql
+                                    
+                                    echo "<tr><td>".$row1['id']."</td>";
+                                    echo "<td>".$row1['name']."</td>";
+                                    echo "<td><a href='merk_page.php?delid=".$row1['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button></td>";
+                                    echo "</tr>";
+                                  }
+                              }
+                          ?>
+                      </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </main>

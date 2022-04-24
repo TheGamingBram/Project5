@@ -8,6 +8,9 @@
     $result_merk = mysqli_query($link, "SELECT * FROM merk_gegevens;"); // simple sql statement to get all data out of the "merk_gegevens" table
     $Merkcount = mysqli_num_rows($result_merk);
 
+    $result_fiets = mysqli_query($link, "SELECT * FROM fiets_gegevens;"); // simple sql statement to get all data out of the "Fiets_gegevens" table
+    $fietscount = mysqli_num_rows($result_fiets);
+
     $names = "";
     $data = "";
 
@@ -96,6 +99,15 @@
                   <br>
                   <div class="card-body">
                     <canvas id="myChart" width="600" height="250"></canvas>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem; text-align: center; margin-left: 1em;">
+                  <br>
+                  <i class="fas fa-bicycle fa-5x"></i>
+                  <div class="card-body">
+                    <h5 class="card-title">Fietsen</h5>
+                    <p class="card-text">Op Dit Moment hebben wij : <br> <?= $fietscount ?> fietsen.</p>
+                    <a href="fiets_page.php" class="btn btn-primary">Naar Fietsen Pagina</a>
                   </div>
                 </div>
               </div>

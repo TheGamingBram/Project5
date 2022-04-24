@@ -86,9 +86,9 @@
                                     echo "<td>" . $row['name'] . " " . $row['lastname'] . "</td>";
                                     echo "<td>";
                                     echo "<button class='btn btn-info btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-".$row['id']."'><span class='fas fa-info' aria-hidden='true'></span></button>";
-                                    echo "  ";
+                                    echo "&nbsp;";
                                     echo "<button class='btn btn-warning btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-edit-".$row['id']."'><span class='fas fa-pen' aria-hidden='true'></span></button>";
-                                    echo "  ";
+                                    echo "&nbsp;";
                                     echo "<a href='klant_registrations.php?delid=".$row['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button>";
                                     echo "</td>";
                                     echo "</tr>";

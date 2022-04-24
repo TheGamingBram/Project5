@@ -30,14 +30,14 @@
           // end post info
           if(mysqli_stmt_execute($stmt)){ //try's to excecute to the database
             PHP_Allert("Success, je data is toegevoegdt"); // popup message to show that it worked
-            sleep(3); // waits 3 seconds
-            header('Location: '.$_SERVER['PHP_SELF']);//reloads the page
           }else{
             PHP_Allert("Error, Probeer het later opnieuw!"); //if it fails then it shows this error
           }
         }
+      }elseif($_POST['type'] == "Update"){
+        $Update = mysqli_query($link, "UPDATE `fiets_gegevens` SET `model` = '".$_POST['ModelName']."', `gender` = '".$_POST['geslachtfiets']."', `color` = '".$_POST['kleur']."', `size` = '".$_POST['size']."', `info` = '".$_POST['info_text']."' WHERE `fiets_gegevens`.`id` = '".$_POST['id']."';");
       }else{
-
+        
       }
     }
     
@@ -183,10 +183,25 @@
                                 while($row = $result_sql_post->fetch_assoc()){ // enables the data so it can be used
                                     if($row['gender'] == 0){ // if the data is 0 then it will be a "heren fiets"
                                       $gender = "Heren Fiets";
+                                      $gender_select = "
+                                        <option value='0' selected>Heren Fiets</option>
+                                        <option value='1'>Vrouwen Fiets</option>
+                                        <option value='2'>Gender neutrale Fiets</option>
+                                      ";
                                     }elseif($row['gender'] == 1){ // if the data is 1 then it will be a "vrouwen fiets"
                                       $gender = "Vrouwen Fiets";
+                                      $gender_select = "
+                                        <option value='0'>Heren Fiets</option>
+                                        <option value='1' selected>Vrouwen Fiets</option>
+                                        <option value='2'>Gender neutrale Fiets</option>
+                                      ";
                                     }else{ //else there it will be a "Gender neutrale Fiets"
                                       $gender = "Gender neutrale Fiets";
+                                      $gender_select = "
+                                        <option value='0'>Heren Fiets</option>
+                                        <option value='1'>Vrouwen Fiets</option>
+                                        <option value='2' selected>Gender neutrale Fiets</option>
+                                      ";
                                     }
 
                                     if($row['status'] == 0){ // if the data is 0 then it will be a "Beschikbaar"
@@ -202,19 +217,103 @@
 
                                     echo "<tr>"; // prepares the data for datatables
                                     echo "<td>" . $row['id'] . "</td>";
-                                    echo "<td> <a href='#' data-bs-toggle='tooltip' data-bs-original-title='" . $row['info'] . "'>" . $row['model'] . "</a></td>";
+
+                                    if($row['info'] != ""){
+                                      echo "<td> <a href='#' class='text-black' data-bs-toggle='tooltip' data-bs-original-title='" . $row['info'] . "'>" . $row['model'] . "</a></td>";
+                                    }else{
+                                      echo "<td> " . $row['model'] . "</td>";
+                                    }
+                                    
                                     echo "<td>" . $row['name'] . "</td>";
                                     echo "<td>" . $gender . "</td>";
                                     echo "<td>" . $row['color'] . "</td>";
                                     echo "<td>" . $row['size'] . "</td>";
-                                    echo "<td>" . $status . "</td>";
+
+                                    if($row['status'] == 1 ){
+
+                                      $verhuurSQL = " Select deelstar.klant_gegevens.name, deelstar.klant_gegevens.lastname 
+                                      From
+                                          deelstar.fiets_verhuur Inner Join
+                                          deelstar.klant_gegevens On deelstar.klant_gegevens.id = deelstar.fiets_verhuur.klant_id Inner Join
+                                          deelstar.fiets_gegevens On deelstar.fiets_gegevens.id = deelstar.fiets_verhuur.fiets_id
+                                      WHERE deelstar.fiets_gegevens.id = ".$row['id']."
+                                      ORDER BY deelstar.fiets_verhuur.id DESC
+                                      LIMIT 1";
+                                      $verhuurSQL_Result = $con->query($verhuurSQL);
+                                      while($row_verhuur =  $verhuurSQL_Result->fetch_assoc()){
+                                        echo "<td> <a href='#' class='text-black' data-bs-toggle='tooltip' data-bs-original-title='Verhuurd aan : ".$row_verhuur['name']." ".$row_verhuur['lastname']."'>" . $status . "</a></td>";
+                                      }
+                                    }elseif ($row['status'] == 2) {
+
+                                      $ReparatieSQL = " Select reparatie_info
+                                      From
+                                        fiets_reparaties
+                                      WHERE fiets_id = ".$row['id']."
+                                      ORDER BY id DESC
+                                      LIMIT 1";
+                                      $ReparatieSQL_Result = $con->query($ReparatieSQL);
+                                      while($row_Reparatie =  $ReparatieSQL_Result->fetch_assoc()){
+                                        echo "<td> <a href='#' class='text-black' data-bs-toggle='tooltip' data-bs-original-title='In reparatie voor : ".$row_Reparatie['reparatie_info']."'>" . $status . "</a></td>";
+                                      }
+
+                                    }
+                                    else{
+                                      echo "<td>" . $status . "</td>";
+                                    }
                                     echo "<td>" ;
-                                    echo "<a href='Fiets_page.php?delid=".$row['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button>";
+                                    echo "<button class='btn btn-warning btn-circle' data-bs-toggle='modal' data-bs-target='#Modal-edit-".$row['id']."'><span class='fas fa-pen' aria-hidden='true'></span></button>";
+                                    echo "&nbsp;";
+                                    echo "<a href='Fiets_page.php?delid=".$row['id']."'><button class='btn btn-danger btn-circle'><span class='fas fa-trash-can' aria-hidden='true'></span></button></a>";
                                     echo "</td>";
                                     echo "</tr>";
 
 
+                                    echo '
+                                    
+                                    <div class="modal fade" id="Modal-edit-'.$row['id'].'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <form method="post">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Fiets Aanpassen</h5>
+                                            <button type="button" required class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="mb-3">
+                                              <input type="text" class="form-control" name="ModelName" value="'. $row['model'].'" required aria-describedby="ModelNaamHelp">
+                                              <div id="ModelNaamHelp" class="form-text">Model Naam</div>
+                                            </div>
+                                            <div class="mb-3">
+                                              <select class="form-select" name="geslachtfiets" aria-label="MerkNaamHelp">
+                                                '.$gender_select.'
+                                              </select>
+                                              <div id="MerkNaamHelp" class="form-text">Geslacht Fiets</div>
+                                            </div>
+                                            <div class="mb-3">
+                                              <input type="text" value="'.$row['color'].'" class="form-control" name="kleur" required aria-describedby="colorHelp">
+                                              <div id="colorHelp" class="form-text">Kleur</div>
+                                            </div>
+                                            <div class="mb-3">
+                                              <input type="number" value="' . $row['size'] . '" min="0" class="form-control" name="size" required aria-describedby="sizeHelp">
+                                              <div id="sizeHelp" class="form-text">Fiets Grote</div>
+                                            </div>
+                                            <div class="mb-3">
+                                            <textarea class="form-control" id="Texteara" name="info_text" rows="3">'. $row['info'] .'</textarea>
+                                              <div id="Texteara" class="form-text">Info Fiets</div>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <input type="hidden" name="type" value="Update">
+                                            <input type="hidden" name="id" value="'.$row['id'].'">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+                                            <button type="submit" class="btn btn-success">Toevoegen</button>
+                                          </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
 
+                                    ';
 
                                 }
                             }
