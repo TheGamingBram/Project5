@@ -16,9 +16,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $Huisnummer = ($_POST['housenr']);
 
       if(mysqli_stmt_execute($stmt)){
-        PHP_Allert("Succes, je bent aangemeld"); // popup message to show that it worked
-        sleep(3); // waits 3 seconds
-        header('Location: '.$_SERVER['PHP_SELF']);//reloads the page
+        PHP_Allert("Succes, je bent aangemeld");// popup message to show that it worked
+        header("Refresh:0; url=Klant_Page.php");// Refreshes page
       }else{
         PHP_Allert("Error, Probeer het later opnieuw!");
       }
