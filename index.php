@@ -11,6 +11,12 @@
     $result_fiets = mysqli_query($link, "SELECT * FROM fiets_gegevens;"); // simple sql statement to get all data out of the "Fiets_gegevens" table
     $fietscount = mysqli_num_rows($result_fiets);
 
+    $result_fiets_reparatie = mysqli_query($link, "SELECT * FROM fiets_gegevens WHERE status = 2;"); // simple sql statement to get all data out of the "Fiets_gegevens" table
+    $reparatiecount = mysqli_num_rows($result_fiets_reparatie);
+
+    $result_fiets_verhuurd = mysqli_query($link, "SELECT * FROM fiets_gegevens WHERE status = 1;"); // simple sql statement to get all data out of the "Fiets_gegevens" table
+    $verhuurcount = mysqli_num_rows($result_fiets_verhuurd);
+
     $names = "";
     $data = "";
 
@@ -29,6 +35,7 @@
                       }
                     }
                 }
+            
 ?>
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -110,6 +117,12 @@
                     <a href="fiets_page.php" class="btn btn-primary">Naar Fietsen Pagina</a>
                   </div>
                 </div>
+                <div class="card" style="width: 40rem; text-align: center; margin-top: 1em;">
+                  <br>
+                  <div class="card-body">
+                    <canvas id="BikeChart" width="600" height="250"></canvas>
+                  </div>
+                </div>
               </div>
             </div>
           </main>
@@ -138,4 +151,42 @@
           }
         }
     });
+
+  var ctx_bike = document.getElementById('BikeChart').getContext('2d'); // creates the chart
+  var BikeChart = new Chart(ctx_bike, {
+    type: 'bar',
+    data: {
+      labels: ["Fietsen"],
+        datasets: [
+          {
+            label: 'Totaal Fietsen',
+            data: [<?=$fietscount?>],
+            backgroundColor: ['rgba(150, 226, 255, 0.2)'],
+            borderColor: ['rgba(54, 162, 235, 1)'],
+            borderWidth: 1
+          },
+          {
+            label: 'Aantal In Reparaties',
+            data: [<?=$reparatiecount?>],
+            backgroundColor: ['rgba(232, 161, 12, 0.2)'],
+            borderColor: ['rgba(168, 118, 12, 1)'],
+            borderWidth: 1
+          },
+          {
+            label: 'Aantal Verhuurd',
+            data: [<?=$verhuurcount?>],
+            backgroundColor: ['rgba(62, 219, 90, 0.2)'],
+            borderColor: ['rgba(19, 154, 43, 1)'],
+            borderWidth: 1
+          }
+        ]
+    },
+    options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+  });
 </script>

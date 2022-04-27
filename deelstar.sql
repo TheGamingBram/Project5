@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 24, 2022 at 10:36 AM
+-- Generation Time: Apr 26, 2022 at 10:16 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `fiets_verhuur` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `klant_id` int(11) NOT NULL,
   `fiets_id` int(11) NOT NULL,
-  `verhuur_datum` datetime NOT NULL,
+  `verhuur_datum` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `verhuur_deadline` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
