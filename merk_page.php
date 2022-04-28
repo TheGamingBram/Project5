@@ -77,14 +77,14 @@
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <form method="post">
+                    <form method="post" autocomplete="off">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Merk Toevoegen</h5>
                       <button type="button" required class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                       <label for="MerkNaam" class="form-label">Merk Naam</label>
-                      <input type="text" name="MerkNaam" id="MerkNaam" class="form-control">
+                      <input type="text" name="MerkNaam" id="MerkNaam" class="form-control" autocomplete="off">
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>

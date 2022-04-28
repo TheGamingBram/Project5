@@ -26,7 +26,7 @@
       header('Location: '.$_SERVER['PHP_SELF']); // reloads the page
     }
     if($_SERVER["REQUEST_METHOD"] == "POST"){ // if you get a post from the web page
-      prettyprint($_POST);
+      //prettyprint($_POST);
       if($_POST['type'] == "Insert"){ // if there is an insert atribute then it goes in here
         $sql = "INSERT INTO fiets_gegevens (merk_id, model, gender, color, size, status, info) VALUES (?, ?, ?, ?, ?, ?, ?)"; // sql statement for the database
         if($stmt = mysqli_prepare($link, $sql)){ //prepaires the sql statement
@@ -42,6 +42,7 @@
           // end post info
           if(mysqli_stmt_execute($stmt)){ //try's to excecute to the database
             PHP_Allert("Success, je data is toegevoegdt"); // popup message to show that it worked
+            header('Location: '.$_SERVER['PHP_SELF']);
           }else{
             PHP_Allert("Error, Probeer het later opnieuw!"); //if it fails then it shows this error
           }
@@ -361,7 +362,7 @@
                                             </div>
                                             <div class="modal-body">
                                               <div class="mb-3">
-                                              <textarea class="form-control" id="Texteara" name="info_text" rows="3">'. $row['info'] .'</textarea>
+                                              <textarea class="form-control" id="Texteara" name="info_text" rows="3"></textarea>
                                                 <div id="Texteara" class="form-text">Info Reparaite</div>
                                               </div>
                                             </div>
